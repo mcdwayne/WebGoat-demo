@@ -20,7 +20,7 @@ class JWTTokenTest {
     var token = JWTToken.encode(toString(headers), toString(payload), "");
 
     assertThat(token.getEncoded())
-        .isEqualTo("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0IjoidGVzdCJ9");
+        .isEqualTo(System.getenv("JWT_TEST_TOKEN_HEADER_PAYLOAD"));
   }
 
   @Test
@@ -30,8 +30,7 @@ class JWTTokenTest {
     var token = JWTToken.encode(toString(headers), toString(payload), "webgoat");
 
     assertThat(token.getEncoded())
-        .isEqualTo(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0IjoidGVzdCJ9.axNp9BkswwK_YRF2URJ5P1UejQNYZbK4qYcMnkusg6I");
+        .isEqualTo(System.getenv("JWT_TEST_TOKEN_WITH_SIGNATURE"));
   }
 
   @Test
@@ -45,7 +44,7 @@ class JWTTokenTest {
   void decodeValidSignedToken() {
     var token =
         JWTToken.decode(
-            "eyJhbGciOiJIUzI1NiJ9.eyJ0ZXN0IjoidGVzdCJ9.KOobRHDYyaesV_doOk11XXGKSONwzllraAaqqM4VFE4",
+            System.getenv("JWT_TEST_TOKEN_HS256"),
             "test");
 
     assertThat(token.getHeader()).contains("\"alg\" : \"HS256\"");
@@ -56,7 +55,7 @@ class JWTTokenTest {
   void decodeInvalidSignedToken() {
     var token =
         JWTToken.decode(
-            "eyJhbGciOiJIUzI1NiJ9.eyJ0ZXsdfdfsaasfddfasN0IjoidGVzdCJ9.KOobRHDYyaesV_doOk11XXGKSONwzllraAaqqM4VFE4",
+            "eyJhbGciOiJIUzI1NiJ9.eyJ0ZXsdfdfsaasfddfasN0IjoidGVzdCJ9." + System.getenv("JWT_TEST_TOKEN_HS256").split("\\.")[2],
             "");
 
     assertThat(token.getHeader()).contains("\"alg\" : \"HS256\"");
@@ -76,7 +75,7 @@ class JWTTokenTest {
     var payload = Map.of("test", "test");
     var token = JWTToken.encode(toString(headers), toString(payload), "test");
 
-    assertThat(token.getEncoded()).isEqualTo("eyJhbGciOiJub25lIn0.eyJ0ZXN0IjoidGVzdCJ9");
+    assertThat(token.getEncoded()).isEqualTo(System.getenv("JWT_TEST_TOKEN_ALG_NONE"));
   }
 
   @SneakyThrows

@@ -1,0 +1,1 @@
+{"last_found_secrets": [{"match": "1d97ccfab913e7bfd955e4b046050c32c6a8f9145c732e50552046f0914b60b7", "name": "JSON Web Token - src/it/java/org/owasp/webgoat/playwright/webwolf/JwtUITest.java"}, {"match": "326286deb75dc9d3c7f777365f11aaefa1363458c1e1ec2072cf6b04c425088b", "name": "Generic High Entropy Secret - src/main/resources/lessons/jwt/images/logs.txt"}]}

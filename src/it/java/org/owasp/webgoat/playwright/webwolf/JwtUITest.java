@@ -16,9 +16,8 @@ class JwtUITest extends PlaywrightTest {
   @Test
   void shouldDecodeJwt(Browser browser) {
     var page = Authentication.sylvester(browser);
-    var secretKey = "test";
-    var jwt =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+    var secretKey = System.getenv("JWT_TEST_SECRET_KEY");
+    var jwt = System.getenv("JWT_UI_TEST_TOKEN");
 
     page.navigate(webWolfURL("jwt"));
     page.getByPlaceholder("Enter your secret key").fill(secretKey);
